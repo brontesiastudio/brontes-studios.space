@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Controle do reel — BRONTES</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#050506">
+<link rel="icon" href="../assets/brand/favicon.ico?v=80a18e00" sizes="32x32">
+<link rel="stylesheet" href="../assets/css/fonts.css">
+<link rel="stylesheet" href="admin.css">
+</head>
+
+<body class="admin">
+
+<header class="ad-bar">
+  <a class="ad-bar__brand" href="../index.html">
+    <img src="../assets/brand/brontes-wordmark.png?v=ac62e3fb" alt="BRONTES">
+  </a>
+  <span class="ad-bar__tag mono">reel_control</span>
+  <button class="ad-bar__out mono" id="signOut" hidden>Sair</button>
+</header>
+
+
+<!-- ─────────────────────────────── gate -->
+<main class="ad-gate" id="gate">
+  <form class="ad-gate__form" id="loginForm">
+    <img class="ad-gate__mark" src="../assets/brand/brontes-mark.png?v=3582c670" alt="">
+    <h1 class="display display--sm">Controle do reel</h1>
+    <p class="lede lede--sm">Troque o vídeo da vitrine do site sem mexer no código.</p>
+
+    <div class="field">
+      <label for="password">Senha</label>
+      <input type="password" id="password" autocomplete="current-password" required>
+    </div>
+
+    <button class="btn btn--solid btn--wide" type="submit" id="loginBtn">Entrar</button>
+    <p class="ad-note mono" id="loginNote" role="status"></p>
+  </form>
+</main>
+
+
+<!-- ─────────────────────────────── console -->
+<main class="ad-main" id="console" hidden>
+
+  <section class="ad-live">
+    <p class="eyebrow mono">no_ar_agora</p>
+    <div class="ad-live__grid">
+      <div class="ad-live__player">
+        <video id="livePreview" muted loop playsinline controls></video>
+        <div class="ad-live__empty mono" id="liveEmpty">nenhum reel definido · exibindo o vídeo padrão</div>
+      </div>
+      <dl class="ad-meta">
+        <div><dt class="mono">Origem</dt><dd id="metaMode">—</dd></div>
+        <div><dt class="mono">Arquivo</dt><dd id="metaName">—</dd></div>
+        <div><dt class="mono">Tamanho</dt><dd id="metaSize">—</dd></div>
+        <div><dt class="mono">Atualizado</dt><dd id="metaUpdated">—</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="ad-panels">
+
+    <!-- upload -->
+    <article class="ad-panel">
+      <p class="eyebrow mono">opcao_01</p>
+      <h2>Enviar um arquivo</h2>
+      <p class="ad-panel__lede">
+        Enviado em partes para que arquivos grandes passem. Até <b id="capLabel">40 MB</b>,
+        <code>.webm</code> ou <code>.mp4</code>.
+      </p>
+
+      <label class="ad-drop" id="drop">
+        <input type="file" id="file" accept="video/webm,video/mp4,video/quicktime" hidden>
+        <span class="ad-drop__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 16V4m0 0L7 9m5-5 5 5M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+        </span>
+        <span class="ad-drop__text" id="dropText">Arraste um vídeo aqui, ou clique para escolher</span>
+      </label>
+
+      <div class="ad-progress" id="progress" hidden>
+        <div class="ad-progress__bar"><span id="progressFill"></span></div>
+        <p class="mono" id="progressText">0%</p>
+      </div>
+
+      <button class="btn btn--solid btn--wide" id="uploadBtn" disabled>Enviar e publicar</button>
+    </article>
+
+    <!-- url -->
+    <article class="ad-panel">
+      <p class="eyebrow mono">opcao_02</p>
+      <h2>Apontar para uma URL</h2>
+      <p class="ad-panel__lede">
+        Sem limite de tamanho e sem peso no repositório. Cole um link direto de vídeo do
+        Cloudflare R2, Bunny, Mux ou qualquer host que sirva o arquivo.
+      </p>
+
+      <div class="field">
+        <label for="url">URL do vídeo</label>
+        <input type="url" id="url" placeholder="https://cdn.yourhost.com/brontes-reel.webm">
+      </div>
+
+      <button class="btn btn--ghost btn--wide" id="urlBtn">Usar esta URL</button>
+    </article>
+  </section>
+
+  <!-- ─────────────────────────────── funnel -->
+  <section class="ad-funnel">
+    <div class="ad-funnel__head">
+      <p class="eyebrow mono">funil_14_dias</p>
+      <select id="funnelDays" class="ad-funnel__days">
+        <option value="7">7 dias</option>
+        <option value="14" selected>14 dias</option>
+        <option value="30">30 dias</option>
+      </select>
+    </div>
+    <p class="ad-panel__lede">
+      Contagem própria, medida no servidor. Quando ela discorda do Gerenciador de
+      Anúncios, a diferença é o que o pixel não conseguiu reportar.
+    </p>
+    <div class="ad-funnel__steps" id="funnelSteps"></div>
+    <p class="ad-status mono" id="funnelNote" role="status"></p>
+  </section>
+
+  <section class="ad-danger">
+    <div>
+      <h3>Redefinir o reel</h3>
+      <p>Limpa o que estiver definido e devolve o vídeo padrão para a vitrine.</p>
+    </div>
+    <button class="btn btn--ghost" id="resetBtn">Redefinir</button>
+  </section>
+
+  <p class="ad-status mono" id="status" role="status"></p>
+</main>
+
+<script src="admin.js" defer></script>
+</body>
+</html>
