@@ -55,4 +55,4 @@
     #
     # media-src allows https: because the reel can be pointed at an external
     # CDN from /admin. Everything else is locked to self.
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://connect.facebook.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://www.facebook.com; font-src 'self'; media-src 'self' https:; connect-src 'self' https://www.facebook.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://connect.facebook.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://www.facebook.com; font-src 'self'; media-src 'self' https:; connect-src 'self' https://www.facebook.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self' https://www.facebook.com https://business.facebook.com https://*.facebook.com; upgrade-insecure-requests"
