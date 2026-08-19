@@ -2,4 +2,4 @@ User-agent: *
 Disallow: /admin/
 Disallow: /api/
 
-Sitemap: https://brontes.club/sitemap.xml
+Sitemap: https://brontes-studios.space/sitemap.xml
