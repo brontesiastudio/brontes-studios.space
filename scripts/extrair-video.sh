@@ -59,6 +59,9 @@ if [[ "$MODO" == url ]]; then
          -o "$VIDEO" "$ALVO"
 else
   cp -f "$ALVO" "$VIDEO"
+  # Aceita uma legenda ao lado do arquivo: trend.mp4 → trend.srt
+  LADO="${ALVO%.*}.srt"
+  [[ -f "$LADO" ]] && cp -f "$LADO" "$DEST/legenda.srt" && echo "--> legenda encontrada ao lado do arquivo"
 fi
 
 # ------------------------------------------------------- 2. limpar legenda
@@ -125,26 +128,56 @@ else
 fi
 
 # --------------------------------------------------------- 3. frames de corte
-echo "--> extraindo frames de corte (limiar=$LIMIAR)"
-ffmpeg -loglevel error -i "$VIDEO" \
-       -vf "select='gt(scene,$LIMIAR)',showinfo" -vsync vfr -q:v 2 \
-       "$DEST/frames/%03d.jpg" 2>/dev/null || true
+# Dois passos de propósito: primeiro descobrimos QUANDO cada corte acontece, depois
+# extraímos o frame de cada tempo. Assim o nome do arquivo carrega o tempo — que é o
+# que permite ler o ritmo do vídeo sem abrir o player.
+echo "--> detectando cortes (limiar=$LIMIAR)"
+TEMPOS="$DEST/cortes.txt"
+{
+  echo "0.000"                       # o frame de abertura é o mais importante de todos
+  ffmpeg -nostdin -loglevel info -i "$VIDEO" -vf "select='gt(scene,$LIMIAR)',metadata=print" \
+         -an -f null - 2>&1 | sed -n 's/.*pts_time:\([0-9.]*\).*/\1/p'
+} | sort -n -u > "$TEMPOS"
 
-N=$(find "$DEST/frames" -name '*.jpg' | wc -l | tr -d ' ')
+N=$(wc -l < "$TEMPOS" | tr -d ' ')
+DUR=$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$VIDEO" | cut -d. -f1)
+
+# Vídeo com cortes suaves (ou nenhum): cai para amostragem por tempo.
 if [[ "$N" -lt 4 ]]; then
-  echo "    só $N frames — caindo para 1 frame por segundo"
-  rm -f "$DEST"/frames/*.jpg
-  ffmpeg -loglevel error -i "$VIDEO" -vf fps=1 -q:v 2 "$DEST/frames/%03d.jpg"
-  N=$(find "$DEST/frames" -name '*.jpg' | wc -l | tr -d ' ')
+  PASSO=$(( DUR / 24 + 1 ))
+  echo "    só $N cortes detectados — amostrando a cada ${PASSO}s"
+  : > "$TEMPOS"
+  for ((t=0; t<DUR; t+=PASSO)); do echo "$t.000" >> "$TEMPOS"; done
+  N=$(wc -l < "$TEMPOS" | tr -d ' ')
 fi
+
+FONTE=$(fc-match -f '%{file}' sans 2>/dev/null || true)
+[[ -f "$FONTE" ]] || FONTE=/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf
+
+echo "--> extraindo $N frames"
+i=0
+while read -r t; do
+  [[ -z "${t//[[:space:]]/}" ]] && continue
+  i=$((i+1))
+  mm=$(printf '%02d' $(( ${t%.*} / 60 )))
+  ss=$(printf '%02d' $(( ${t%.*} % 60 )))
+  # O tempo carimbado no quadro é o que transforma o mosaico em storyboard legível.
+  if [[ -f "$FONTE" ]]; then
+    CARIMBO=(-vf "drawtext=fontfile='$FONTE':text='${mm}\\:${ss}':x=10:y=10:fontsize=28:fontcolor=white:box=1:boxcolor=black@0.7:boxborderw=8")
+  else
+    CARIMBO=()
+  fi
+  ffmpeg -nostdin -loglevel error -ss "$t" -i "$VIDEO" -frames:v 1 -q:v 2 \
+         "${CARIMBO[@]}" "$DEST/frames/$(printf '%03d' $i)_${mm}m${ss}s.jpg" -y
+done < "$TEMPOS"
 
 # ------------------------------------------------------------ 4. contact sheet
 echo "--> montando mosaico"
 COLS=5
 LINHAS=$(( (N + COLS - 1) / COLS ))
-ffmpeg -loglevel error -y -pattern_type glob -i "$DEST/frames/*.jpg" \
-       -frames:v 1 -vf "scale=320:-1,tile=${COLS}x${LINHAS}:padding=6:margin=6" \
-       "$DEST/contato.jpg" 2>/dev/null || echo "    (mosaico falhou, os frames individuais estão em frames/)"
+ffmpeg -nostdin -loglevel error -y -pattern_type glob -i "$DEST/frames/*.jpg" \
+       -frames:v 1 -vf "scale=360:-1,tile=${COLS}x${LINHAS}:padding=8:margin=8:color=black" \
+       "$DEST/contato.jpg" 2>/dev/null || echo "    (mosaico falhou; os frames estão em frames/)"
 
 rm -f "$DEST"/legenda*.srt "$DEST"/legenda*.vtt
 

@@ -9,8 +9,22 @@ egresso com política da organização. `www.youtube.com:443` responde **403 na 
 bloqueio de política, não falha de rede. Efeito prático: nessas sessões não dá para
 assistir, transcrever ou tirar frames de vídeo do YouTube.
 
-Contorno correto: rodar `scripts/extrair-video.sh` numa **sessão local** (CLI na sua
-máquina ou app desktop), onde vale a sua rede. Ou colar a transcrição direto na conversa.
+Verificado com a ferramenta instalada, não por suposição: `yt-dlp 2026.08.19` falha com
+`Tunnel connection failed: 403 Forbidden` nas três tentativas. O bloqueio é de rede —
+nenhum programa passa.
+
+### Perímetro medido (22/08)
+
+| Alcançável da sessão remota | Bloqueado |
+|---|---|
+| GitHub, API Anthropic, API Gemini, pip/npm | YouTube, OpenAI, Meta/Facebook, TikTok, Instagram, Hotmart, HeyGen, ElevenLabs, fal, Replicate, HuggingFace, Google |
+
+**Consequência para o projeto:** nenhuma etapa operacional (subir campanha, publicar
+vídeo, ler faturamento, gerar vídeo por API) roda de uma sessão remota. Logo a
+automação não pode depender de uma sessão de IA ligada — ela precisa ser **código no
+repositório**, escrito e testado aqui, executado na sua máquina ou num servidor seu.
+Isso é melhor de qualquer forma: automação que só funciona com alguém assistindo não é
+automação.
 
 Divisão de trabalho entre sessões:
 

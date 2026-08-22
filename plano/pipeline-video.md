@@ -57,8 +57,12 @@ Sai em `material/<nome>/`:
 |---|---|
 | `transcricao.txt` | o roteiro do vídeo, já sem a repetição da legenda automática |
 | `transcricao-tempo.txt` | o mesmo com marcação de tempo — é como você casa fala com corte |
-| `frames/` | um JPG por corte de cena |
+| `frames/` | um JPG por corte, nomeado com o tempo (`003_00m04s.jpg`) e com o tempo carimbado no quadro |
+| `cortes.txt` | os tempos exatos de cada corte — o ritmo do vídeo em números |
 | `contato.jpg` | mosaico de todos os frames: **é o storyboard visual, numa imagem só** |
+
+O primeiro frame extraído é sempre o de t=0. Num vídeo curto o quadro de abertura é o
+que decide a retenção — ele nunca pode faltar no storyboard.
 
 O `contato.jpg` é o arquivo que importa. Uma imagem com os 20–40 cortes do vídeo lado a
 lado mostra o ritmo inteiro de uma vez — dá para ver a estrutura de retenção sem
