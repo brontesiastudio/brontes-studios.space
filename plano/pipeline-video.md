@@ -38,12 +38,36 @@ milhões de views.
 O passo 4 é o que a maioria pula, e é o único que importa. Quem copia o conteúdo faz uma
 cópia pior. Quem copia o esqueleto faz um vídeo novo com retenção emprestada.
 
-Comando para extrair os frames de corte:
+### Ferramenta: `scripts/extrair-video.sh`
+
+Os passos 2 e 3 estão automatizados. Roda na **sua máquina** (este container tem o
+YouTube bloqueado por política de rede — ver `log.md`):
+
 ```bash
-ffmpeg -i trend.mp4 -vf "select='gt(scene,0.3)',showinfo" -vsync vfr frames/%03d.png
+./scripts/extrair-video.sh "https://www.youtube.com/watch?v=ID"
+# ou, para um arquivo que você já baixou:
+./scripts/extrair-video.sh trend.mp4 nome-da-pasta
 ```
-Joga a pasta no GPT, pede o storyboard em tabela (tempo | plano | movimento | o que
-prende), e re-escreve a coluna de conteúdo com a sua personagem.
+
+Requisitos: `yt-dlp`, `ffmpeg`, `python3`.
+
+Sai em `material/<nome>/`:
+
+| Arquivo | Serve para |
+|---|---|
+| `transcricao.txt` | o roteiro do vídeo, já sem a repetição da legenda automática |
+| `transcricao-tempo.txt` | o mesmo com marcação de tempo — é como você casa fala com corte |
+| `frames/` | um JPG por corte de cena |
+| `contato.jpg` | mosaico de todos os frames: **é o storyboard visual, numa imagem só** |
+
+O `contato.jpg` é o arquivo que importa. Uma imagem com os 20–40 cortes do vídeo lado a
+lado mostra o ritmo inteiro de uma vez — dá para ver a estrutura de retenção sem
+assistir. Joga ele + a transcrição numa conversa e peça o storyboard em tabela
+(tempo | plano | movimento | o que prende), depois reescreva só a coluna de conteúdo
+com a sua personagem.
+
+Ajuste de sensibilidade: `LIMIAR=0.2 ./scripts/extrair-video.sh <url>` gera mais frames
+(vídeo com cortes suaves); `LIMIAR=0.4` gera menos.
 
 **Um template de storyboard validado vale mais que 100 créditos de geração.** Guarde
 cada esqueleto que funcionar em `plano/storyboards/` e reutilize com personagens
