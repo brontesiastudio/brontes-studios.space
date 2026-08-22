@@ -24,28 +24,79 @@ passo mais barato do processo inteiro e o que mais evita queimar caixa.
 
 ## 2. A matemática que decide se você deveria estar rodando tráfego
 
-| Variável | Valor realista (BR, público frio) |
-|---|---|
-| CPM | R$15–35 |
-| CTR | 1–2% → CPC ~R$1,50–3,00 |
-| Conversão da página | 3–8% |
-| **CPA resultante** | **~R$30–60** |
-| **Ticket atual** | **R$9,90 / R$19,90** |
+> **Correção (22/08).** A versão anterior desta seção fixava um portão de "AOV acima de
+> R$60" e tratava o ticket como R$9,90 isolado. Estava errado em dois pontos: ignorava os
+> 3 order bumps e o upsell (o que conta é o carrinho, não o produto de entrada), e usava
+> CPA de funil comum em vez de CPA de funil de impulso. Low ticket escala de verdade —
+> o gate correto não é um valor de AOV, é a relação abaixo.
 
-**O CPA é maior que o ticket.** Não por pouco: por 2 a 3 vezes. Nenhum ajuste de
-segmentação, criativo ou horário conserta uma estrutura em que o custo de adquirir é o
-dobro do que você recebe.
+### O gate correto
 
-Existem exatamente duas saídas, e nenhuma delas é "otimizar a campanha":
+```
+AOV líquido (carrinho inteiro, depois das taxas)  >  CPA real
+```
 
-- **Subir o AOV.** Order bumps + upsell + comunidade recorrente no back-end. Se o
-  cliente de R$9,90 vale R$60–90 ao longo de 60 dias, o CPA de R$40 vira lucro.
-- **Não pagar pelo tráfego.** Orgânico (Ramo A) até o back-end existir.
+Só isso. Não existe número mágico de AOV. Se o CPA é R$10 e o líquido por venda é R$18,
+a estrutura é lucrativa e escala. Se o CPA é R$40 com o mesmo líquido, não é. O número
+que importa é o **seu**, medido, não uma média de mercado.
 
-> **Portão de entrada deste ramo: AOV comprovado acima de R$60.**
-> Enquanto não tiver isso medido — não estimado, medido — cada real em Meta é caixa
-> queimado. Você tem R$2.500. Isso é 40–60 dias de teste. Não gaste antes de ter o
-> back-end pronto para receber.
+### Por que o funil de impulso tem CPA baixo
+
+Oferta de R$9,90 não se compara a oferta de R$97. A decisão de compra é impulsiva, o
+quiz já qualificou o lead antes do checkout, e a conversão de página fica muito acima da
+faixa de um funil comum. É por isso que R$10 por criativo é um número plausível aqui —
+e é exatamente o que precisa ser confirmado com os seus prints, não com estimativa minha.
+
+### AOV do carrinho atual (modelo — substituir pelos números reais)
+
+Estrutura no ar: front R$9,90 → upsell Pro (+R$10) → 3 order bumps
+(IAvatares, Biblioteca de 60 criativos, Esteira + calendário 30 dias).
+
+| Componente | Take rate | Contribuição |
+|---|---|---|
+| Front-end R$9,90 | 100% | R$9,90 |
+| Upsell Pro (+R$10) | a medir | — |
+| Bump 1 | a medir | — |
+| Bump 2 | a medir | — |
+| Bump 3 | a medir | — |
+| **AOV bruto** | | **a medir** |
+| − taxa do gateway | | |
+| **AOV líquido** | | **este é o número do gate** |
+
+**Ação: puxe o AOV real no painel da Hotmart antes da próxima campanha.** Vendas totais
+÷ número de pedidos. É um número que você já tem e que decide todo o resto.
+
+### A restrição que sobrou (e que é a real)
+
+Unit economics não é mais o argumento. O que continua valendo com R$2.500 de caixa é
+**capital de giro**, e por um motivo específico do low ticket:
+
+Você gasta no Meta **hoje** e recebe da Hotmart **depois** — o prazo de repasse padrão
+para cartão costuma ser bem mais longo que o ciclo de gasto do anúncio (antecipação
+existe, com custo; Pix cai mais rápido). *Confirme o seu prazo e o seu mix Pix/cartão no
+painel — varia por conta e por plano.*
+
+O efeito prático: mesmo com ROAS positivo, você precisa financiar todo o período entre
+gastar e receber. A R$70/dia de verba com repasse em 30 dias, o pico de caixa exposto
+chega a ~R$2.100 — praticamente todo o seu caixa preso, sem margem para uma rodada de
+teste ruim no meio.
+
+**Portanto o gate operacional não é o AOV. É este:**
+
+- [ ] AOV líquido real medido no painel
+- [ ] CPA real medido (com print, não estimativa)
+- [ ] Prazo de repasse conhecido, e mix Pix/cartão conhecido
+- [ ] Caixa suficiente para cobrir o ciclo gasto→recebimento **mais** uma rodada de teste perdida
+
+Com os quatro preenchidos, escala. Sem eles, o risco não é o modelo — é ficar sem caixa
+no meio de uma campanha que estava dando certo, que é a forma mais burra de morrer.
+
+### Nota independente
+
+Nada disso muda o argumento do `README.md` §1. Low ticket lucrativo continua sendo renda
+que **zera todo dia 1º**: cada mês recomeça do zero em vendas. A comunidade recorrente
+resolve um problema diferente (previsibilidade), não o mesmo. As duas coisas convivem —
+o low ticket lucrativo é, aliás, a melhor fonte de assinante que existe.
 
 ## 3. Estrutura correta ("cabine de marketing")
 

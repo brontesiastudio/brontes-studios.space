@@ -36,7 +36,7 @@ ramo é: *sobrevive a 7 dias de ausência?*
 
 | Caminho | O que precisa | Recorrente? | Veredito |
 |---|---|---|---|
-| Low ticket R$9,90 / R$19,90 | ~100–200 vendas/mês, **todo mês do zero** | Não | Front-end, não é a meta |
+| Low ticket R$9,90 + bumps | volume de vendas, **todo mês do zero** | Não | Escala de verdade, mas não é renda previsível |
 | **Comunidade por assinatura** | **~43 membros a R$47/mês** | **Sim** | **É aqui que a meta fecha** |
 | TikTok Shop (comissão) | volume de views + conta habilitada | Parcial | Ramo 2, complementar |
 | Lives TikTok | audiência + presença ao vivo | Não | Conflita com baixa constância |
@@ -68,8 +68,9 @@ confirme dentro do app antes de tratar 2k como número mágico.
 ### Ramo C — Tráfego pago
 → `trafego-pago.md`
 Objetivo: estrutura correta e regra de escala escrita, para não repetir o erro de ontem.
-**Gatilho de entrada: só volte a rodar tráfego depois que o AOV passar de R$60.** Com
-oferta de R$9,90–19,90 o CPA no Meta é maior que o ticket. Ver a matemática lá.
+**Gatilho de entrada: AOV líquido real medido > CPA real medido, e caixa que cubra o
+ciclo gasto→repasse.** Low ticket escala; o que não escala é rodar sem esses quatro
+números na mão. Ver o gate completo lá.
 
 ### Ramo D — Fábrica de vídeo (pipeline)
 → `pipeline-video.md`
@@ -106,7 +107,7 @@ terminar nenhum.
 | 3–6 | Ramo A + D: pipeline manual, 1 config semanal | 2k seguidores, tela gravada |
 | 7–8 | Ramo B + F: Shop ativo, curso montado do material gravado | comunidade aberta |
 | 9–12 | Ramo F: vender comunidade no orgânico | primeiros assinantes |
-| 13–19 | Ramo C: tráfego, só se AOV > R$60 | escala |
+| 13–19 | Ramo C: tráfego, com os 4 números do gate medidos | escala |
 
 ---
 
